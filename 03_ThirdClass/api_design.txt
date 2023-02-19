@@ -1,0 +1,3 @@
+GET /birds
+// It is plural because it matches the collection.
+GET /birds/{id}
