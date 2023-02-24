@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 
 const birds = []
 const raven = {
@@ -66,6 +67,8 @@ app.get("/birds/scientificName", (req, res) => {
 
 */
 
+// My solution:
+/*
 // Post Method:
 
 app.post("/birds/:name&:color&:scientificName", (req, res) => {
@@ -81,7 +84,6 @@ app.post("/birds/:name&:color&:scientificName", (req, res) => {
 // POST Methods. Not sure if best implementation, as it can store empty strings if not enough parameters are being sent.
 // Not sure what is the best way to do it.
 
-/*
 app.post("/birds/name/:name", (req, res) => {  
     birds.push({
         id: birds.length + 1,
@@ -114,6 +116,19 @@ app.post("/birds/name/:name/color/:color/scientificName/:scientificName", (req, 
 
 */
 
+// Class solution: Using the body. For that, we need to allow JSON Parsing.
+// For the ID, we should never use the array length to to get ID numbers.
+app.use(express.json());
+
+app.post("/birds", (req, res) => {
+    const birdToCreate = req.body;
+    birdToCreate.id = ++currentID;
+    birds.push(birdToCreate);
+    res.send({birds});
+})
+
+let currentID = 1;
+
 // PUT Method:
 
 app.put("/birds/:id/:name&:color&:scientificName", (req, res) => {
@@ -129,8 +144,8 @@ app.put("/birds/:id/:name&:color&:scientificName", (req, res) => {
     }
 })
 
-// PATCH Methods
-
+/*
+// PATCH Methods: My Solution
 app.patch("/birds/:id/name/:name", (req, res) => {
     foundBird = birds.find(bird => bird.id === Number(req.params.id));
     if (foundBird){
@@ -163,7 +178,25 @@ app.patch("/birds/:id/scientificName/:scientificName", (req, res) => {
         res.send({});
     }
 })
+*/
 
+// Patch Methods: Class
+app.patch("/birds/:id", (req, res) => {
+    const foundIndex = birds.findIndex(bird => bird.id === Number(req.params.id));
+    if (!foundIndex === -1) {
+        res.status(404).send({message: `no bird found with id ${req.params.id}`})
+    } else {
+        // This can change the ID!
+        //foundBird = {...foundBird, ...req.params}
+        const foundBird = birds[foundIndex];
+        const birdToCreate = {...foundBird, ...req.body, id: foundBird.id}
+        birds[foundIndex] = birdToCreate;
+        res.send({birdToCreate});
+    }
+})
+
+// Delete (My Solution):
+/*
 app.delete("/birds/:id", (req, res) => {
     foundBird = birds.find(bird => bird.id === Number(req.params.id));
     if (foundBird){
@@ -171,6 +204,18 @@ app.delete("/birds/:id", (req, res) => {
         res.send(birds);
     } else {
         res.send({});
+    }
+})
+*/
+
+// Delete: Class Solution
+app.delete("/birds/:id", (req, res) => {
+    const foundIndex = birds.findIndex(bird => bird.id === Number(req.params.id));
+    if (foundIndex === -1) {
+        res.status(404).send({ data: foundIndex, message: `no birds found with id ${req.params.id}`})
+    } else {
+        const deletedBird = birds.splice(foundIndex, 1)[0];
+        res.send({ deletedBird });
     }
 })
 
