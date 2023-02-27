@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time</title>
+</head>
+<body>
+
+    <h1 style="text-align: center">Background Color Changer</h1>
+    <h3 style="text-align: center">How does this work?</h3>
+    <p style="text-align: center">Every second, I call Date.now() and get an 11 digit number. I take the last six numbers from this, and convert it to Hex. This number is used to change the background color.</p>
+    <p style="text-align: center">It's simple, but it's nice =)</p>
+
+    <div class="buttons" style="text-align: center">
+        <button id="change-color">Press me for changing!</button>
+        <button id="stop-change">Stop changing color!</button>
+    </div>
+
+    <script>
+        // Interval, for starting an Interval or clear it.
+        let interval;
+        // ChangeButton: when clicked, calls the function to change the background color.
+        const changeButton = document.getElementById("change-color");
+        changeButton.addEventListener("click", startChanging);
+        // StopButton: when clicked, stops the Interval and shows the start button again.
+        const stopButton = document.getElementById("stop-change");
+        stopButton.style.visibility = 'hidden';
+        stopButton.addEventListener("click", () => {
+            colorChange = false;
+            clearInterval(interval);
+            changeButton.style.visibility = 'visible';
+            stopButton.style.visibility = 'hidden';
+        })
+
+        // Sets the interval and changes visibility of buttons.
+        function startChanging(){
+            interval = setInterval(changeBackGroundColor, 1000);
+            changeButton.style.visibility = 'hidden';
+            stopButton.style.visibility = 'visible';
+        }
+        
+        // Date.now() returns a big integer (11 numbers).
+        // Make it a string, and cut after the number 4, so only 9 numbers remain.
+
+        function changeBackGroundColor(){
+            // toString(16) changes a string to it's hex number.
+           const time = Date.now().toString(16).substring(5);
+           document.body.style.backgroundColor = `#${time}`;
+        }      
+    </script>
+</body>
+</html>

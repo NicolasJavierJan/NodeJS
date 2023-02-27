@@ -54,6 +54,20 @@ app.get("/bottle/:bottleSize", (req, res) => {
     res.send({ theBottleIs: req.params.bottleSize })
 })
 
+app.get("/time/time", (req, res) => {
+    res.send({time: new Date()});
+    // We can do Date() TimeLocal, new Date()timeUTC, Date.now() UnixTime
+})
+
+app.get("/time/day", (req, res) => {
+    res.send({data: new Date().toLocaleString('default', {weekday: 'long'})})
+})
+
+app.get("/time/month", (req, res) => {
+    res.send({data: new Date().toLocaleString('default', {month: 'long'})})
+    // We can also use toLocaleString('da-dk') and it will do it in the language you provide
+})
+
 // POST: 
 app.post("/package", (req, res) => {
     console.log(req.body);
