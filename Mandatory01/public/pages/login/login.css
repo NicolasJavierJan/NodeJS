@@ -1,12 +1,19 @@
+body {
+    background-color: #EEEEEE;
+    font-family:'Courier New', Courier, monospace;
+}
+
 #login-container {
-    background-color: lightblue;
+    background-color: white;
     border-radius: 25px;
     top: 50%;
     left: 50%;
     width: 30em;
-    height: 22em;
+    height: 23em;
     transform: translate(-50%, -50%);
     position: fixed;
+    box-shadow: 10px 10px 5px grey;
+    padding: 20px;
 }
 
 #login-container h1 {
@@ -21,4 +28,29 @@
 #login-button-div {
     display: flex;
     justify-content: center;
+}
+
+a:link {
+    color: black;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+a:visited {
+    color: black;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+a:active {
+    color: black;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+a:hover {
+    color: black;
+    text-decoration: underline;
+    background-color: transparent;
+    font-weight: bold;
 }
