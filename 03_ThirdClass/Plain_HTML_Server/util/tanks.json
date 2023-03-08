@@ -1,0 +1,6 @@
+{
+    "tanks": [
+        {"name": "Leopard", "nationality": "Germany"},
+        {"name": "Tiger", "nationality": "Germany"}
+    ]
+}

@@ -16,7 +16,7 @@ function updateVisitorCount(){
             'Content-type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => console.log(response))
     .then(result => {
         showVisitorCount(result);
     })

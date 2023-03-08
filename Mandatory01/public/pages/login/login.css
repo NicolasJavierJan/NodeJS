@@ -1,0 +1,24 @@
+#login-container {
+    background-color: lightblue;
+    border-radius: 25px;
+    top: 50%;
+    left: 50%;
+    width: 30em;
+    height: 22em;
+    transform: translate(-50%, -50%);
+    position: fixed;
+}
+
+#login-container h1 {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#login-container p {
+    text-align: center;
+}
+
+#login-button-div {
+    display: flex;
+    justify-content: center;
+}

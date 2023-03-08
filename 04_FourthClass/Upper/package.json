@@ -1,0 +1,29 @@
+{
+  "name": "upper",
+  "version": "0.0.1",
+  "description": "Motivation app with jokes, quotes and daily commands",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasJavierJan/NodeJS.git"
+  },
+  "keywords": [
+    "app",
+    "motivation",
+    "jokes",
+    "etc"
+  ],
+  "author": "Nico",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NicolasJavierJan/NodeJS/issues"
+  },
+  "homepage": "https://github.com/NicolasJavierJan/NodeJS#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -3,12 +3,19 @@ const app = express();
 
 app.use(express.static("public"));
 
+const tanksUtil = require("./util/tanks.js");
+//console.log(tanksUtil.getTanks());
+
+const { getTanks, addTank } = require("./util/tanks.js")
+
+let visitorCount = 0;
+
+/*
 const tanks = [
     {name: "Leopard", nationality: "Germany"},
     {name: "Tiger", nationality: "Germany"}
 ]
-
-let visitorCount = 0;
+*/
 
 // Pages
 
@@ -26,10 +33,15 @@ app.get("/visitors", (req, res) => {
     res.sendFile(__dirname + "/public/visitors/visitors.html");
 })
 
+// TODO serve a page called museum guards
+app.get("/museumGuards", (req, res) => {
+    res.sendFile(__dirname + "/public/museumGuards/museumGuards.html")
+})
+
 // API
 
 app.get("/api/tanks", (req, res) => {
-    res.send({data: tanks})
+    res.send({data: getTanks()})
 })
 
 app.get("/api/visitors", (req, res) => {

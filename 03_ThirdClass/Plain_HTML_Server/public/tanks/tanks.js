@@ -1,3 +1,5 @@
+console.log("aa")
+
 // Show tanks in the div "tanks-wrapper"
 const tanksWrapper = document.getElementById("tanks-wrapper");
 
