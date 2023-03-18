@@ -8,7 +8,7 @@ logoutButton.addEventListener("click", () => {
 })
 
 if (user === null){
-    window.location.replace("/sign-up");
+    window.location.replace("/login");
 } else if (user === "admin"){
     newPageButton.style.display = "block";
 }

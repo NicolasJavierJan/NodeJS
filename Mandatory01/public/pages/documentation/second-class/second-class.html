@@ -1,0 +1,82 @@
+        <h2 style="font-weight: bold;">Second Class: 10/02/2023</h2>
+        <h5>Strict mode:</h5>
+        <p>Strict mode catches problems with the code. Makes it easier to write "secure" JavaScript: </p>
+        <div class="code">
+            <p>"use strict"</p>
+        </div>
+        <h5>Functions:</h5>
+        <p>Because of hoisting, we can call functions that have not yet been declared. Functions are also fist class citizens in JavaScript: we can pass them as parameters to other functions.</p>
+        <p>There are different ways to write functions:</p>
+        <p>Named functions:</p>
+        <div class="code">
+            <p>function log(message) {</p>
+            <p>console.log(message)</p>
+            <p>};</p>
+        </div>
+        <p>Anonymous functions: Functions without a name.</p>
+        <div class="code">
+            <p>const randomAnonymous = function (message) {</p>
+            <p>console.log(message)</p>
+            <p>};</p>
+        </div>
+        <p>Arrow functions:</p>
+        <div class="code">
+            <p>const randomArrowFunction = (message) => console.log(message);</p>
+        </div>
+        <p>Callback function: </p>
+        <p>A callback is a function passed as an argument to another function.</p>
+        <h5>Package.json</h5>
+        <p>The package.json file contains data and metadata about a project, such as: name, version and dependencies. It is similar to the "pom.xml" file that Maven uses.</p>
+        <p>We can create the package.json file on your own or we can use the help of NPM to do it:</p>
+        <div class="code">
+            <p>npm init</p>
+        </div>
+        <p>After the package.json file is created, we can add/remove dependencies and install it: </p>
+        <div class="code">
+            <p>npm install</p>
+        </div>
+        <p>NPM Install will download packages, folders and code from the dependencies we added to the package.json file. We can also use NPM uninstall to uninstall them.</p>
+        <h5>Express:</h5>
+        <p>Express is a micro-framework, easy to set up. It will help us to create a server and serve an API and webpages.</p>
+        <p>To use install in our project, we can manually add it in the package.json file by adding it in the dependencies. We can also use</p>
+        <div class="code">
+            <p>npm install express --save</p>
+        </div>
+        <p>We then create an app.js file, and start setting up the server:</p>
+        <div class="code">
+            <p>const express = require("express");</p>
+            <p>const app = express();</p>
+        </div>
+        <p>We can also do it all in a single line:</p>
+        <div class="code">
+            <p>const app = require("express")();</p>
+        </div>
+        <p>To finish the setting up, we have to make the app listen to a port:</p>
+        <div class="code">
+            <p>app.listen(8080);</p>
+        </div>
+        <p>It has to be on the bottom of the document. If it is higher, it won't work.</p>
+        <p>And that's it! Our Express server is ready to serve an API or HTML files.</p>
+        <h5>GET Requests:</h5>
+        <p>If we try to go to localhost:8080 in our newly created Express server, we will get an error: "Cannot GET /". This means that we have not added a Path to / and told Express what to show.</p>
+        <div class="code">
+            <p>app.get("/", (req, res) => { res.send( { message: "our first route" } );});</p>
+        </div>
+        <p>Now, when we try to go back to localhost:8080/ we will see a JSON response: { message:  "our first route" }.</p>
+        <p>So we learnt how to get information. But, is it possible to SEND information to the server via a GET request?</p>
+        <p>Short answer is yes. But we cannot do it from the Body. We have to use the URL. And there are two ways of doing it: Parameters or Queries.</p>
+        <p>Parameters are sent via the URL, and are represented in the server with a colon.</p>
+        <div class="code">
+            <p>app.get("/bottle/:bottleSize", (req, res) => {</p>
+                <p>res.send({ theBottleIs: req.params.bottleSize })</p>
+            <p>})</p>
+        </div>
+        <p>Now, if we go to localhost:8080/bottle/large we are telling the server that the bottleSize param is "large". So, we can access the dynamic text that a user inputs and work with it in the back end. Unlike Queries, params are required.</p>
+        <p>Queries are also sent via the URL, and are represented with the question mark in the URL. It is not represented in the backend.</p>
+        <div class="code">
+            <p>app.get("/bat", (req, res) => {</p>
+                <p>res.send({message: `The bat is ${req.query.adjective}`});</p>
+            <p>})</p>
+        </div>
+        <p>If we go to localhost:8080/bat?adjective=spooky we are sending information to the Backend. It gets it via the URL and we can manipulate it.</p>
+    </div>

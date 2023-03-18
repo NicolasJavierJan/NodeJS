@@ -40,7 +40,6 @@ app.get("/birds/:id", (req, res) => {
     } else {
         res.send({});
     }
-    
 })
 
 // This was my implementation.
@@ -120,14 +119,14 @@ app.post("/birds/name/:name/color/:color/scientificName/:scientificName", (req, 
 // For the ID, we should never use the array length to to get ID numbers.
 app.use(express.json());
 
+let currentID = 1;
+
 app.post("/birds", (req, res) => {
     const birdToCreate = req.body;
     birdToCreate.id = ++currentID;
     birds.push(birdToCreate);
     res.send({birds});
 })
-
-let currentID = 1;
 
 // PUT Method:
 

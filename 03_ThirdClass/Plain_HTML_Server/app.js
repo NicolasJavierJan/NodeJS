@@ -48,6 +48,15 @@ app.get("/api/visitors", (req, res) => {
     res.send({data: visitorCount})
 })
 
+/* does not work for some reason 
+app.get("/proxy", (req, res) => {
+    // A Proxy Server is an intermediate between the server and the client. Many benefits: you can cache responses and have a larger system to scale.
+    // Make a request to http://www.google.com
+    // Serve the text data
+    fetch('https://wwww.google.com').then(response => response.text()).then(result => res.send(result));
+})
+*/
+
 app.put("/api/visitors", (req, res) => {
     res.send({ data: ++visitorCount })
 })

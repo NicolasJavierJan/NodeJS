@@ -1,0 +1,124 @@
+        <h2 style="font-weight: bold;">Fourth Class: 24/02/2023</h2>
+        <h5>CRUDable REST API</h5>
+        <p>One of our exercises was to create a full CRUDable REST API.</p>
+        <p>We had to do it about birds, an following conventions.</p>
+        <p>Get Methods:</p>
+        <div class="code">
+            <p>app.get("/birds", (req, res) => {</p>
+                <p>res.send(birds)</p>
+            <p>})</p>
+            <br>
+            <p>app.get("/birds/:id", (req, res) => {</p>
+                <p> foundBird = birds.find(bird => bird.id == req.params.id)</p>
+                    <p>if (foundBird) {</p>
+                        <p>res.send(foundBird)</p>
+                            <p>} else {</p>
+                                <p> res.send({});</p>
+                                    <p>}</p>
+                                        <p>})</p>
+        </div>
+        <p>Post Method: Using the body to get the information. Also allowing JSON Parsing.</p>
+        <div class="code">
+            <p>app.use(express.json());</p>
+            <br>
+            <p>let currentID = 1;</p>
+            <br>
+            <p>app.post("/birds", (req, res) => {</p>
+                <p>const birdToCreate = req.body;</p>
+                <p>birdToCreate.id = ++currentID;</p>
+                <p>birds.push(birdToCreate);</p>
+                <p>res.send({birds});</p>
+                <p>})</p>
+        </div>
+        <p>As we can see from the code above, we are also creating a variable for updating ID's. It updates the ID before pushing the new bird (whose data we got from the body) into the array of Birds.</p>
+        <p>Patch Method:</p>
+        <div class="code">
+            <p>app.patch("/birds/:id", (req, res) => {</p>
+                <p>const foundIndex = birds.findIndex(bird => bird.id === Number(req.params.id));</p>
+                <p>if (!foundIndex === -1) {</p>
+                    <p>res.status(404).send({message: `no bird found with id ${req.params.id}`})</p>
+                    <p>} else {</p>
+                        <p>const foundBird = birds[foundIndex];</p>
+                            <p>const birdToCreate = {...foundBird, ...req.body, id: foundBird.id}</p>
+                                <p>birds[foundIndex] = birdToCreate;</p>
+                                    <p>res.send({birdToCreate});</p>
+                                        <p>}</p>
+                                            <p>})</p>
+        </div>
+        <p>Here, we first check if there's a bird with that ID. If there's not, we send an error message. If there is, we first save the bird into a variable. We then create a new bird by spreading the found bird, and spreading the body parameters that were sent. If any key matches, the value gets updated! And the ID we put by hand from the found bird so no one can maliciously change ID's. We then replace the new bird with the found bird.</p>
+        <p>Delete Method:</p>
+        <div class="code">
+            <p>app.delete("/birds/:id", (req, res) => {</p>
+                <p>const foundIndex = birds.findIndex(bird => bird.id === Number(req.params.id));</p>
+                <p>if (foundIndex === -1) {</p>
+                    <p>res.status(404).send({ data: foundIndex, message: `no birds found with id ${req.params.id}`})</p>
+                    <p>} else {</p>
+                        <p>const deletedBird = birds.splice(foundIndex, 1)[0];</p>
+                            <p>res.send({ deletedBird });</p>
+                                <p>}</p>
+                                    <p>})</p>
+        </div>
+        <p>In the Delete Method first we try to find if there's an index with the ID we passed. If not, we send an error message. If yes, we first save the bird corresponding to that ID in a variable, and then we splice that bird from the array using the Index.</p>
+        <h5>Fetch Requests:</h5>
+        <p>We use fetch to get resources from a server. We can send requests and get responses back.</p>
+        <div class="code">
+            <p>fetch("/api/users") // Where are we fetching? </p>
+            <p>.then(response => response.json()) // We convert the response to JSON type.</p>
+            <p>.then(result => doSomething) // Then we do something</p>
+        </div>
+        <p>This is a simple GET Request. Normally we would get back an Array of objects (in this case, we get the Users and their passwords). We can also send a request with a body (PUT, POST, PATCH).</p>
+        <div class="code">
+            <p>fetch("/api/users", {</p>
+                <p>method: "POST",</p>
+                <p>headers: {</p>
+                    <p>'Content-type': 'application/json'</p>
+                    <p>},</p>
+                        <p>body: JSON.stringify({</p>
+                            <p>'username': username,</p>
+                                <p>'password': password</p>
+                                    <p>})</p>
+                                        <p>})</p>
+                                            <p>.then(response => response.json())</p>
+                                                <p>.then(result => {</p>
+                                                    <p>if (result.code === '500'){</p>
+                                                        <p>alert("User was created!");</p>
+                                                            <p>window.location.replace("/login");</p>
+                                                                <p>}</p>
+                                                                    <p>});</p>
+        </div>
+        <h5>Time:</h5>
+        <p>Date is always a complicated matter for programming languages.</p>
+        <p>In JavaScript, there's different ways to get the Date:</p>
+        <div class="code">
+            <p>Date() // 'Wed Mar 15 2023 18:20:01 GMT+0100 (Central European Standard Time)' (new Date().toString())</p>
+            <p>new Date() // Wed Mar 15 2023 18:20:01 GMT+0100 (Central European Standard Time) => as an Object</p>
+            <p>Date.now() // Returns the number of miliseconds since January 1st, 1970.</p>
+            <p>Date.parse() // Returns the number of miliseconds since January 1st, 1970, when you pass a String representation of a Date.</p>
+            <br>
+            <p>const date = Date.now()</p>
+            <p>date.getDate() // Returns day of the month 1-31</p>
+            <p>date.getDay() // Returns day of the week 0-6</p>
+            <p>date.getFullYear() // Returns year in 4 digits.</p>
+        </div>
+        <p>And so on....</p>
+        <h5>Deployment:</h5>
+        <p>We used Vercel to deploy the app. It's super easy to set up, you just need to create a vercel.json file:</p>
+        <div class="code">
+            <p>{</p>
+                <p>"version": 2,</p>
+                <p>"builds": [</p>
+                <p>{</p>
+                    <p>"src": "app.js",</p>
+                    <p>"use": "@now/node"</p>
+                    <p>}</p>
+                    <p>],</p>
+                    <p>"routes": [</p>
+                    <p>{</p>
+                        <p>"src": "/(.*)",</p>
+                        <p>"dest": "app.js"</p>
+                        <p>}</p>
+                        <p>]</p>
+                        <p>}</p>
+        </div>
+        <p>After creating the vercel.json file, we have to upload the project to GitHub, and go to Vercel's webpage to deploy.</p>
+    </div>

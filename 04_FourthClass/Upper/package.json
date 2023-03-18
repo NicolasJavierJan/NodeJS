@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/NicolasJavierJan/NodeJS#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "escape-html": "^1.0.3",
+    "express": "^4.18.2",
+    "sentiment": "^5.0.2"
   }
 }

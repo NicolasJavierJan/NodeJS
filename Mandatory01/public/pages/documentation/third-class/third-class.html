@@ -1,0 +1,31 @@
+        <h2 style="font-weight: bold;">Third Class: 17/02/2023</h2>
+        <h5>Loops and Loop Methods:</h5>
+        <p>There are many, many ways to loop in JavaScript. Because there are many ways, there are also good and bad choiced when you need to loop.</p>
+        <p>A classic for loop</p>
+        <div class="code">
+            <p>(for int i = 0; i < someNumber; i++)</p>
+        </div>
+        <p>will parse all of the items of a collection. In some ocasions, we need precisely this. But sometimes we don't, and it's a waste of time and resources to do it.</p>
+        <p>Map iterates, calls a callback function once for each element and constructs a new array from the results. It will normally not change the original array, but there are cases where it does, so we have to be very careful as to check that it did not modify the original as well.</p>
+        <p>Filter creates a copy of a portion of the given array, filtered down to the elements that pass the test implemented by the provided function.</p>
+        <p>Find will return the first element in the collection that satisfies the provided testing function.</p>
+        <p>Sort will take the array, convert it's elements to strings, comparing their sequences of UTF-16 code units values with each other, and sort it in ascending order.</p>
+        <p>Foreach will work similarly to map, but we use it in a different way. We would normally use the forEach function when we want to create HTML elements from the items in a collection, for example to populate a list or a table with data.</p>
+        <p>As we can see, there are many built-in iteration methods that we can use, each one with a different use that can help us be more efficient with time and resources.</p>
+        <h5>Serving HTML in Express:</h5>
+        <p>We can serve HTML directly in Express:</p>
+        <div class="code">
+            <p>app.get("/about", (req, res) => {</p>
+                <p>res.send(`</p>
+                    <p><`h1>About<`/h1></p>
+                    <p><`h3>This is my about page...!<`/h3></p>
+                <p>`)</p>
+            <p>})</p>
+        </div>
+        <p>But this is strongly disencouraged, and extremely bothersome to do.</p>
+        <p>We can also do it in a more organized way: Have all the HTML, CSS and JS in a public folder, and serve that folder to Express.</p>
+        <div class="code">
+            <p>app.use(express.static(path.resolve("public")));</p>
+        </div>
+        <p>By doing this, you can now load the files that are in the public directory by writing in the URL. </p>
+    </div>

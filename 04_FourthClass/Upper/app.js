@@ -1,34 +1,47 @@
-//const express = require("express");
-//const app = express();
-
-// Name of the folder in nodemodules (express)
 import express from "express";
 const app = express();
 
-app.use(express.static("public"));
-
-//const jokes = require("./util/jokes");
-//import jokes from "./util/jokes.js";
-
-// __dirname does not work.
 import path from "path";
 
-app.get("/", (req, res) => {
-    res.sendFile(path.resolve("public/pages/frontpage/frontpage.html"));
-})
+app.use(express.static("public"));
 
-app.get("/quests", (req, res) => {
-    res.sendFile(path.resolve("public/pages/quests/quests.html"));
-})
+import getJoke from "./util/jokes.js";
+
+import templateEngine from "./util/templateEngine.js";
+
+const frontPage = templateEngine.readPage("./public/pages/frontpage/frontpage.html")
+//const jokesPath = "./public/pages/jokes/jokes.html"
+
+// Constructed pages
+//const frontpagePage = navbar + frontpage + footer;
+const frontpagePage = templateEngine.renderPage(frontPage, {
+    tabTitle: "Welcome",
+    cssLink: "" // `<link rel=stylesheet href="etc etc"1`
+});
+
+app.get("/", (req, res) => {
+    res.send(frontpagePage);
+});
+
+app.get("/IRLQuests", (req, res) => {
+    res.sendFile(path.resolve("public/pages/IRLQuests/IRLQuests.html"));
+});
+
+app.get("/jokes", async (req, res) => {
+    const joke = await getJoke();
+    const jokes = templateEngine.readPage("./public/pages/jokes/jokes.html").replace("$JOKE", JSON.stringify(joke));
+    const jokesPage = templateEngine.renderPage(jokes, {
+        tabTitle: "ADDD",
+    })
+    res.send(jokesPage);
+});
+
 
 
 const PORT = 8080;
-
 app.listen(PORT, (error) => {
-    if (error)
-    {
+    if (error) {
         console.log(error);
-    } else {
-        console.log("Server is running on port ", PORT);
     }
-})
+    console.log("Server running on port", PORT);
+});

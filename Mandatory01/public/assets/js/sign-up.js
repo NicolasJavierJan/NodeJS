@@ -3,8 +3,8 @@ if (user !== null){
     window.location.replace("/");
 }
 
-const signUpButton = document.getElementById("sign-up-button");
-const form = document.getElementById("sign-up-form");
+const signUpButton = document.getElementById("sign-up-login-button");
+const form = document.getElementById("sign-up-login-form");
 
 signUpButton.addEventListener("click", () => {
     const formData = new FormData(form);

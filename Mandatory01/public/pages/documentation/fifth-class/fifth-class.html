@@ -1,0 +1,43 @@
+        <h2 style="font-weight: bold;">Fifth Class: 03/03/2023</h2>
+        <h5>Importing and Exporting</h5>
+        <p>There are two different ways to import and export: NodeJS (require) and ES6 (import and export).</p>
+        <p>"Require":</p>
+        <div class="code">
+            <p>const express = require("express");</p>
+        </div>
+        <p>We use "require" to include modules (JavaScript libraries) into our application.</p>
+        <p>In our "Tanks Museum" project, we used the "require" method to import and export data from different files. For example, in our "app.js" file:</p>
+        <div class="code">
+            <p>const { getTanks, addTank } = require("./util/tanks.js")</p>
+        </div>
+        <p>In this way, we are able to use the getTanks and addTank function that are present in "tanks.js":</p>
+        <div class="code">
+            <p>function getTanks(){</p>
+                <p>return tanks;</p>
+                <p>}</p>
+            
+                    <p>function addTank(tank) {</p>
+                        <p>tanks.push(tank);</p>
+                            <p>return tanks;</p>
+                                <p>}</p>
+        </div>
+        <p>Import and Export:</p>
+        <p>To use this way, we have to edit the "package.json" file:</p>
+        <div class="code">
+            <p>"type": "module",</p>
+        </div>
+        <p>This will give us access to the Import and Export keywords. There are two types of imports and exports: named and default.</p>
+        <p>Named:</p>
+        <div class="code">
+            <p>export const guards = [];</p>
+            <br>
+            <p>import { guards } from "./barracks.js";</p>
+        </div>
+        <p>And default:</p>
+        <div class="code">
+            <p>export default guards </p>
+                        <br>
+                        <p>import guards from "./barracks.js";</p>
+        </div>
+        <p>We can also import scripts in the HTML with the Script tag. We can import more than one file, and that would effectively create a big .js file, making it risky (we could risk using the same variable name in different files, for example).</p>
+    </div>

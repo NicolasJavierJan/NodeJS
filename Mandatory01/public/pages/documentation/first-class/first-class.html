@@ -1,0 +1,114 @@
+        <h2 style="font-weight: bold;"> First Class: 03/02/2023</h2>
+        <h5> Course Introduction </h5>
+        <p>It's not just Node.js. It's about understanding the relationship between backend and frontend. It is also important to think about the User Experience. We should always think before we code.</p>
+        <p>There will be weekly exercises that have to be handed in via Fronter. There will also be two mandatories that are required to be able to go and take the final exam. The Exam Project will be solo or in groups, is a large full stack project and should be something that we really want to build.</p>
+        <p>Course communication will be on Teams. We are expected to be very active.</p>
+        <h5>Intro to Node.js</h5>
+        <p>There are many Javascript engines (an engine is a software component that executes Javascript code): V8, SpiderMonkey, JavaScriptCore, Chakra, etc. Node.js runs on V8 and executes JavaScript code outside a Web Browser.</p>
+        <p>What is Node.js good for? We can use it to: create a server, create console applications or create scripts.</p>
+        <p>Having the same language (JS) for backend and frontend makes it easier to developers and companies to create products. It is also good to reuse code (specially validation code).</p>
+        <h5>First steps:</h5>
+        <p>After installing Node.js, we fired up the terminal, cloned our Github repository for the class, moved into the folder, and started Visual Studio Code (or other IDE).</p>
+        <div class="code">
+            <p>git clone (your repository name)</p>
+            <p>cd (your repository name)</p>
+            <p> code .</p>            
+        </div>
+        <p>Once we got into the IDE, we fired up a terminal inside the IDE. There are different types of terminals: Powershell, git bash, wsl, etc.</p>
+        <p>Inside the terminal, we wrote</p>
+        <div class="code">
+            <p>node</p>
+        </div>
+        <p>to start Node.js. The Prompt changed to ">", meaning that the terminal is now an interpreter for Node, for typing Node commands.</p>
+        <p>We did some Node commands to see how it works.</p>
+        <h5>Variables and Data Types:</h5>
+        <p>There are three types of variables: var, let and const. They are used to store data values. </p>
+        <h5>Var:</h5>
+        <p>Before ES6, the only way to declare a variable was using the "var" keyword. Variables declared with the "var" keyword can or can not have assignments. For example:</p>
+        <div class="code">
+            <p>var firstName = "Nicolas";</p>
+            <p>var lastName;</p>
+        </div>
+        <p>"Var" variables can be scoped globally or function/locally scoped. They are globally scoped when the variable is declared outside a function and it is function scoped when it is declared inside a function. "Var" variables can also be re-declared and updated:</p>
+        <div class="code">
+            <p>var name = "Nico";</p>
+            <p>var name = "Nicolas";</p>
+            <p>name = "Nico";</p>
+        </div>
+        <p>"Var" variables are hoisted to the top of their scope and initialized with a value of undefined:</p>
+        <div class="code">
+            <p>console.log(name)</p>
+            <p>var name = "Nico"</p>
+        </div>
+        <p>Is interpreted as:</p>
+        <div class="code">
+            <p>var name;</p>
+            <p>console.log(name)</p>
+            <p>name = "Nico"</p>
+        </div>
+        <p>Thus logging undefined.</p>
+        <p>Because "var" variables can be re-declared, errors might occur when you are inadvertedly creating a variable that shares name with other variable that was declared before. The use of "var" variables is strongly discouraged.</p>
+        <h5>Let:</h5>
+        <p>"Let" variables are block scoped. They can be updated but not re-declared: </p>
+        <div class="code">
+            <p>let name = "Nico";</p>
+            <p>name = "Nicolas";</p>
+        </div>
+        <p>works, but:</p>
+        <div class="code">
+            <p>let name = "Nico";</p>
+            <p>let name = "Nicolas"</p>
+        </div>
+        <p>won't. However, they can be defined in different scopes, and that will treat the variables as different:</p>
+        <div class="code">
+            <p>let name = "Nico"</p>
+            <p>function nameless () {</p>
+            <p>    let name = "";</p>
+            <p>console.log(name); // "";</p>
+            <p>}</p>
+            <p>console.log(name); // "Nico";</p>
+        </div>
+        <p>"Let" variables are also hoisted to the top. But they are not initialized. If you try to use one before declaration, you will get a Reference Error.</p>
+        <h5>Const:</h5>
+        <p>"Const" declarations are block scoped, like "let". Unlike "let", "const" variables cannot be updated or re declared. So, neither of these would work:</p>
+        <div class="code">
+            <p>const name = "Nico";</p>
+            <p>const name = "Nicolas";</p>
+            <p>name = "Nico";</p>
+        </div>
+        <p>Every const variable must then be initialized at the time of declaration.</p>
+        <p>With objects declared with the "const" keyword the behaviour is different. The properties of objects can be updated:</p>
+        <div class="code">
+            <p>const nico = {</p>
+            <p>name: "nico"</p>
+            <p>};</p>
+            <br>
+            <p>nico.name = "Nicolas";</p>
+        </div>
+        <p>Hoisting of "const" is the same as "let": hoisted to the top but not initialized.</p>
+        <h5>Data types:</h5>
+        <p>Dynamic and Weak Typing:</p>
+        <p>JavaScript is a dynamic language, which means that variables are not directly associated with any particular data type, and any variable can be assigned (and re-assigned) values of all types:</p>
+        <div class="code">
+            <p>let name = "nico";</p>
+            <p>name = 32;</p>
+            <p>name = true;</p>
+        </div>
+        <p>It is also "weakly typed", which means that it allows implicit type conversion when an operation involves mismatched types, instead of throwing type errors:</p>
+        <div class="code">
+            <p>const asdf = 8;</p>
+            <p>const result = asdf + "1"; // "1" is of type string</p>
+            <p>console.log(result) // "81"</p>
+        </div>
+        <p>There are primitive values: all types except Object (Null, Undefined, Number, Boolean, BigInt, String and Symbol).</p>
+        <p>All primitives except null can be tested with the "typeof" operator. typeof null returns Object, so it has to be tested with the "===" comparation.</p>
+        <p>All primitives except null and undefined have an Object Wrapper, which provide useful methods to work with the primitive values.</p>
+        <p>And then you have Objects. They are the only mutable values. Functions are also objects with the additional capability of being callable.</p>
+        <h5>REST API Conventions:</h5>
+        <p>We are going to follow two conventions to create our REST API's:</p>
+        <p>Resources will be named using nouns.</p>
+        <p>The order of the endpoints will be: GET, POST, PUT, PATCH and DELETE.</p>
+        <p></p>
+        <h5>Code Conventions and Clean Code</h5>
+        <p>Following a convention is always a good idea. It makes the code readable and logical. Naming variables with meaningful names that clearly state what is going to be stored in them, as well as naming functions with meaningful names can make all the difference when creating code. This way, even if we go back to code we did years ago, we can easily understand it without complications. JavaScript does not need semi-colons, but a decision has to be made: Either you use them ALWAYS or NEVER. We will also follow the same naming convention for variables: either camelCase, snake_case or kebab-case.</p>
+    </div>
