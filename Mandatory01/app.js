@@ -64,6 +64,12 @@ const sixthClassPage = templateEngine.renderPage(sixthClass, {
     pageTitle: "Sixth Class"
 })
 
+// Seventh (LAST) Class:
+const seventhClass = templateEngine.readPage("./public/pages/documentation/seventh-class/seventh-class.html");
+const seventhClassPage = templateEngine.renderPage(seventhClass, {
+    pageTitle: "Seventh Class"
+})
+
 // Sign-Up:
 const signUp = templateEngine.readPage("./public/pages/sign-up/sign-up.html");
 const signUpPage = templateEngine.renderAuthPage(signUp, {
@@ -78,47 +84,61 @@ const loginPage = templateEngine.renderAuthPage(login, {
     scriptLink: "./assets/js/login.js"
 })
 
+// New Page:
+const newPage = templateEngine.readPage("./public/pages/documentation/newpage/newpage.html");
+const newPagePage = templateEngine.renderPage(newPage, {
+    pageTitle: "Create new page"
+})
+
 // Pages
+app.get("/new-page", (req, res) => {
+    res.send(newPagePage);
+});
+
 app.get("/sign-up", (req, res) =>{
     res.send(signUpPage);
-})
+});
 
 app.get("/login", (req, res) => {
     res.send(loginPage);
-})
+});
 
 app.get("/", (req, res) => {
     res.send(frontPagePage);
-})
+});
 
 app.get("/first-class", (req, res) => {
     res.send(firstClassPage);
-})
+});
 
 app.get("/second-class", (req, res) => {
     res.send(secondClassPage);
-})
+});
 
 app.get("/third-class", (req, res) => {
     res.send(thirdClassPage);
-})
+});
 
 app.get("/fourth-class", (req, res) => {
-    res.send(fourthClassPage)
-})
+    res.send(fourthClassPage);
+});
 
 app.get("/fifth-class", (req, res) => {
-    res.send(fifthClassPage)
-})
+    res.send(fifthClassPage);
+});
 
 app.get("/sixth-class", (req, res) => {
-    res.send(sixthClassPage)
-})
+    res.send(sixthClassPage);
+});
+
+app.get("/seventh-class", (req, res) => {
+    res.send(seventhClassPage);
+});
 
 app.get("/api/users", (req, res) => {
     // DISCLAIMER: I WOULD NEVER DO THIS IN REAL LIFE.
-    res.send({ users: users })
-})
+    res.send({ users: users });
+});
 
 app.post("/api/users", (req, res) => {
     const userToCreate = req.body;
@@ -136,4 +156,4 @@ app.listen(PORT, (error) => {
     } else {
         console.log("Listening on Port ", PORT);
     }
-})
+});

@@ -2,6 +2,11 @@ const user = sessionStorage.getItem("username");
 const newPageButton = document.getElementById("new-page");
 const logoutButton = document.getElementById("logout");
 
+
+newPageButton.addEventListener("click", () => {
+    window.location.replace("/new-page");
+})
+
 logoutButton.addEventListener("click", () => {
     sessionStorage.removeItem("username");
     window.location.replace("/login");

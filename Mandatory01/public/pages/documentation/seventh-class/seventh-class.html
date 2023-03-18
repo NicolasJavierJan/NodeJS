@@ -1,0 +1,66 @@
+<h2 style="font-weight: bold;">Seventh Class: 17/03/2023</h2>
+<h5>Proxy</h5>
+<p>A Proxy Server is an intermediate between the server and the client. It has many benefits, like for example monitoring internet usage of employees and children, bandwith saving and improved speeds, privacy benefits, improved security, or even cache responses and have a scaled larger system.</p>
+<h5>Nodemon and Nodemon Extension</h5>
+<p>Nodemon is a tool that helps develop Node.js based applications by automatically restarting the node application when file changes in the directory are detected. We have been using Nodemon for our projects since the beggining. On start, Nodemon tells you which file extensions it's listening for changes. By default the extension it's listening to are: js, mjs and json. But we can customize this. We have to create a "nodemon.js" file, and add:</p>
+<div class="code">
+    <p>{</p>
+        <p>"ext": "js, json, html"</p>
+<p>}</p>
+</div>
+<p>and now our Nodemon will be listening to changes in js, json and html files.</p>
+<h5>Server Side Rendering:</h5>
+<p>Server Side Rendering renders a webpage in the server as opposed to the browser. When you do SSR, you create an HTML file in the server and send it to the user. The user will get a fully rendered HTML page that already contains all the information without having to wait for JS or CSS to load. When done well, it can greatly improve performance, as webpages render only once (when server starts) and not everytime the client request them. There is also easy indexation by search engines.</p>
+<h5>SSR in Our Project:</h5>
+<p>So, how are we doing Server Side Rendering in our Mandatory Project?</p>
+<p>Before SSR, we had our HTML pages, and we sent them to the client:</p>
+<div class="code">
+    <p>app.get("/index", (req, res) => {</p>
+        <p>res.sendFile(path.resolve("public/pages/documentation/index/index.html"));</p>
+        <p>});</p>
+</div>
+<p>So, everytime the client sent a request to an endpoint, the file was sent, and was the client's job to render it.</p>
+<p>What we did first to make it render from the server, is import fs. FileSystem is part of Node and it helps to read files, both asyncronously (fs.readFile) and syncronously (fs.readFileSync). </p>
+<p>Then, we divided our HTML files in parts (components). The navbar, for example, is present in every page except the login and sign-up pages, and it wouldn't make sense to copy and paste it into 5+ pages. So, we created a components folder with sub-folders for every component, and pasted there from the beggining of the HTML page to the start of the body.</p>
+<p>We did the same for the end of the body tag and the scripts, and for the login and sign-up pages as well.</p>
+<p>A problem arose at this point. Every page will be rendered from the same "navbar" file, but pages will have different titles, css files, and scripts! We got around this problem by creating variables in the HTML that will later be replaced.</p>
+<p>So, for example:</p>
+<div class="code">
+    <p><`title>$PAGE_TITLE<`/title></p>
+</div>
+<p>We created a templateEngine.js file for dealing with the creation of the webpages.</p>
+<p>Inside that file, we imported fs, and created a three functions that we later exported:</p>
+<p>readPage gets a pagePath, stringifies it and returns it.</p>
+<p>renderPage gets a path and zero to many config variables.</p>
+<div class="code">
+    <p>function renderPage(page, config = {}){</p>
+        <p>const navBar = fs.readFileSync("./public/components/navbar/navbar.html").toString()</p>
+        <p>.replace("$PAGE_TITLE", config.pageTitle || "NODE-LEDGE")</p>
+        <p>.replace("$CSS_LINK", config.cssLink || "./assets/css/documentation-pages.css");</p>
+        <p>const scripts = fs.readFileSync("./public/components/scripts/scripts.html").toString()</p>
+        <p>.replace("$SCRIPT_LINK", config.scriptLink || "./assets/js/index.js");</p>
+        <p>return navBar +  page + scripts;</p>
+    <p>}</p>
+</div>
+<p>As we can see, it reads the navbar and the scripts from a different page, replaces the variables with custom information passed in the app.js file (or a different one if none was passed) and then returns an HTML page by concatenating navbar + page + scripts. </p>
+<p>We also have a different function for the Authorization pages, as they do not require a NavBar.</p>
+<p>Once we have this, we can create instances of the pages in the app.js file:</p>
+<div class="code">
+    <p>// FrontPage:</p>
+    <p>const frontPage = templateEngine.readPage("./public/pages/documentation/index/index.html");</p>
+        <p>const frontPagePage = templateEngine.renderPage(frontPage, {</p>
+            <p>pageTitle: "NODE-LEDGE",</p>
+                <p>cssLink: "./assets/css/index.css"</p>
+                    <p>});</p>
+</div>
+<p>And send the page directly rendered to the client:</p>
+<div class="code">
+    <p>app.get("/", (req, res) => {</p>
+        <p>res.send(frontPagePage);</p>
+    <p>});</p>
+</div>
+<p>Now, because the pages are loaded syncronously, the code will run line by line on server start, render the pages, and have them ready for the user, thus having Server Side Rendering.</p>
+<h5>XSS</h5>
+<p>Cross Side Scripting attacks are a type of injection in which malicious scripts are injected into otherwise benign websites. They can occur anywhere a web application uses input from a user within the output it generates without validating it or encoding it.</p>
+<p>In our application, for example, it can be done by injecting custom scripts into the scripts tag in the webpages.</p>
+<p>We used escape-html in class to prevent this from happening.</p>
