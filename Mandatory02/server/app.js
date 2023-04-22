@@ -15,13 +15,18 @@ const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: true
+}));
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {secure: false}
 }))
+
 app.use("/auth", rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   // TODO:
@@ -30,6 +35,7 @@ app.use("/auth", rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 }));
+
 app.use(authRouter);
 
 // Home Page, to check if it worked!

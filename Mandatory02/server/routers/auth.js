@@ -1,48 +1,37 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
+import db from "../databases/connection.js"
 
 const router = Router();
 
-// TODO:
-// Replace this with however we do the Database:
-const users = [];
-
 // Sign Up
 router.post("/auth/sign-up", async (req, res) => {
-    // TODO:
-    // Add a check for if user already exists =)
-    // Easier when a Database is involved.
-  
-    // Create new user object, hash the password.
-    const newUser = {
-      username: req.body.username,
-      password: await bcrypt.hash(req.body.password, 8),
-      email: req.body.email
+    const user = await db.all("SELECT * FROM users WHERE USERNAME = ?", [req.body.username]);
+    if (user.length !== 0){
+      res.status(400).send();
+    } else {
+      const password = await bcrypt.hash(req.body.password, 8);
+      await db.all("INSERT INTO users (username, email, password, user_type) VALUES (?, ?, ?, 2)", [req.body.username, req.body.email, password]);
+      res.status(200).send();
     }
-  
-    // Save the new user.
-    users.push(newUser);
-  
-    res.send("User was created");
   });
   
   // Login
   router.post("/auth/login", async (req, res) => {
     // Search for user:
-    const foundUser = users.find(user => user.username === req.body.username);
-    if (foundUser) {
-      const passwordCheck = await bcrypt.compare(req.body.password, foundUser.password);
+    const user = await db.all("SELECT * FROM users WHERE username = ?", [req.body.username]);
+    if (user.length !== 0){
+      const passwordCheck = await bcrypt.compare(req.body.password, user[0].password);
       if (passwordCheck){
-        req.session.name = foundUser.username;
-        res.send(`Hello again, ${req.session.name}`);
+        req.session.name = user[0].username;
+        res.status(200).send(`Welcome back, ${req.session.name}`);
       } else {
-        //TODO:
-        // Don't forget to change this so it looks like the other one, 
-        // no need to give clues to people that they found an existing user!
-        res.send("Wrong Password!");
+        // Password does not match:
+        res.status(401).send();
       }
     } else {
-      res.send("I don't know you");
+      // User not found:
+      res.status(401).send();
     }
   });
   
