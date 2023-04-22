@@ -38,7 +38,7 @@ router.post("/auth/sign-up", async (req, res) => {
   // Log out
   router.get("/auth/logout", (req, res) => {
     req.session.destroy();
-    res.redirect("/");
+    res.status(200).send();
   });
 
 export default router;

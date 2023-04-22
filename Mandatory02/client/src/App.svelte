@@ -4,6 +4,20 @@
   import Login from "./pages/login/Login.svelte";
   import SignUp from "./pages/sign-up/Sign-up.Svelte";
   import Main from "./pages/main/Main.svelte";
+
+  function handleLogout(){
+    fetch("http://localhost:8080/auth/logout", {
+      method: "GET",
+            credentials: "include",
+            headers: {
+                'Content-type': 'application/json'
+            }
+    }).then(response => {
+      if (response.status === 200){
+        window.location.href = "/";
+      }
+    });
+  }
 </script>
 
 <Router>
@@ -11,6 +25,10 @@
     <Link to="/">Home</Link>
     <Link to="/login">Login!</Link>
     <Link to="/sign-up">Sign Up!</Link>
+    <Route path="/main">
+      <Link to="#" on:click={handleLogout}>Logout</Link>
+      <Main />
+    </Route>
   </nav>
     <Route path="/">
       <Home />
@@ -20,9 +38,6 @@
     </Route>
     <Route path="/sign-up">
       <SignUp />
-    </Route>
-    <Route path="/main">
-      <Main />
     </Route>
 </Router>
 

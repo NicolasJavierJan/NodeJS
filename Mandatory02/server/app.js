@@ -41,7 +41,7 @@ app.use(authRouter);
 // Home Page, to check if it worked!
 app.get("/", (req, res) => {
   if (req.session.name === "admin"){
-    res.send("Hello, Admin! Lord of the Manor. King of the Castle");
+    res.send("Hello, Admin! Lord of the Manor. King of the Castle.");
   } else {
     res.send(`Hello there, ${req.session.name}`);
   }
