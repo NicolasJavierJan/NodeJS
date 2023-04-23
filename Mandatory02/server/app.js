@@ -39,7 +39,7 @@ app.use("/auth", rateLimit({
 app.use(authRouter);
 
 // Home Page, to check if it worked!
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   if (req.session.name === "admin"){
     res.send("Hello, Admin! Lord of the Manor. King of the Castle.");
   } else {
@@ -49,6 +49,7 @@ app.get("/", (req, res) => {
 
 // Contact E-Mail:
 app.post('/contact', async (req, res) => {
+  console.log("here");
   try {
     console.log(req.body);
     // Create a test account using createTestAccount
@@ -78,10 +79,10 @@ app.post('/contact', async (req, res) => {
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
     // Send a response to the client
-    res.send('Email sent successfully');
+    res.status(200).send();
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error sending email');
+    res.status(500).send();
   }
 });
 
